@@ -1,0 +1,12 @@
+{
+  "name": "workbreeze",
+  "version": "1.0.0",
+  "description": "AI-powered file analysis for small business teams",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "pdf-parse": "^1.1.1"
+  }
+}
