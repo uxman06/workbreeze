@@ -6,7 +6,6 @@
     "dev": "vercel dev"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.20.0",
     "pdf-parse": "^1.1.1"
   }
 }

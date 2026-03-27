@@ -9,110 +9,184 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
   :root {
-    --white:  #ffffff;
-    --off:    #f7f7f5;
-    --border: #e4e4e0;
-    --border2:#d0d0cb;
-    --ink:    #1a1a18;
-    --ink2:   #3d3d3a;
-    --muted:  #8a8a85;
-    --light:  #b5b5b0;
-    --red:    #c0392b;
-    --radius: 10px;
-    --serif:  'Instrument Serif', Georgia, serif;
-    --sans:   'Geist', system-ui, sans-serif;
+    --white:   #ffffff;
+    --off:     #f7f7f5;
+    --off2:    #f0f0ec;
+    --border:  #e4e4e0;
+    --border2: #d0d0cb;
+    --ink:     #1a1a18;
+    --ink2:    #3d3d3a;
+    --muted:   #8a8a85;
+    --light:   #b5b5b0;
+    --red:     #c0392b;
+    --green:   #1a6b3c;
+    --green-bg:#f0faf4;
+    --amber:   #92400e;
+    --amber-bg:#fffbeb;
+    --radius:  10px;
+    --serif:   'Instrument Serif', Georgia, serif;
+    --sans:    'Geist', system-ui, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; }
 
-  header { border-bottom: 1px solid var(--border); padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-family: var(--serif); font-size: 22px; color: var(--ink); letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
+  /* HEADER */
+  header { border-bottom: 1px solid var(--border); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); z-index: 10; }
+  .logo { font-family: var(--serif); font-size: 21px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
   .logo-mark { width: 8px; height: 8px; background: var(--ink); border-radius: 50%; animation: breathe 3s ease-in-out infinite; }
   @keyframes breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(0.7);opacity:0.4} }
-  .header-tag { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+  .header-tag { font-size: 12px; color: var(--muted); letter-spacing: 0.4px; }
 
-  .page { max-width: 700px; margin: 0 auto; padding: 56px 24px 80px; }
+  /* PAGE */
+  .page { max-width: 700px; margin: 0 auto; padding: 52px 24px 100px; }
 
-  .hero { margin-bottom: 48px; }
-  .hero h1 { font-family: var(--serif); font-size: clamp(36px,5vw,52px); font-weight: 400; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; }
+  /* HERO */
+  .hero { margin-bottom: 44px; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(34px,5vw,50px); font-weight: 400; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 10px; }
   .hero h1 em { font-style: italic; color: var(--muted); }
-  .hero p { color: var(--muted); font-size: 15px; max-width: 420px; font-weight: 300; }
+  .hero p { color: var(--muted); font-size: 15px; max-width: 400px; font-weight: 300; }
 
+  /* LABEL */
   .label { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: block; }
 
-  .type-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  /* PILLS */
+  .type-pills { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
   .type-pill { font-size: 12px; padding: 3px 10px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); background: var(--off); }
 
-  .upload-area { border: 1.5px dashed var(--border2); border-radius: var(--radius); padding: 32px 24px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; margin-bottom: 16px; background: var(--off); }
-  .upload-area:hover, .upload-area.dragover { border-color: var(--ink); background: #f0f0ec; }
+  /* UPLOAD */
+  .upload-area { border: 1.5px dashed var(--border2); border-radius: var(--radius); padding: 30px 24px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; margin-bottom: 14px; background: var(--off); }
+  .upload-area:hover, .upload-area.dragover { border-color: var(--ink); background: var(--off2); }
   .upload-area input { display: none; }
-  .upload-icon { width: 38px; height: 38px; margin: 0 auto 12px; opacity: 0.2; display: block; }
-  .upload-area h3 { font-size: 15px; font-weight: 500; color: var(--ink2); margin-bottom: 4px; }
-  .upload-area p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
-  .upload-browse { display: inline-block; padding: 8px 18px; border: 1.5px solid var(--border2); border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--ink2); background: var(--white); cursor: pointer; transition: border-color 0.2s; }
+  .upload-icon { width: 36px; height: 36px; margin: 0 auto 10px; opacity: 0.18; display: block; }
+  .upload-area h3 { font-size: 15px; font-weight: 500; color: var(--ink2); margin-bottom: 3px; }
+  .upload-area p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .upload-browse { display: inline-block; padding: 7px 16px; border: 1.5px solid var(--border2); border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--ink2); background: var(--white); cursor: pointer; transition: border-color 0.2s; }
   .upload-browse:hover { border-color: var(--ink); }
 
-  .file-pill { display: none; align-items: center; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--off); margin-bottom: 16px; }
+  /* FILE PILL */
+  .file-pill { display: none; align-items: center; gap: 12px; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--off); margin-bottom: 14px; }
   .file-pill.show { display: flex; }
-  .file-emoji { font-size: 20px; flex-shrink: 0; }
+  .file-emoji { font-size: 18px; flex-shrink: 0; }
   .file-info { flex: 1; min-width: 0; }
-  .file-name-text { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .file-name-text { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .file-size { font-size: 12px; color: var(--muted); }
-  .remove-btn { background: none; border: none; color: var(--light); cursor: pointer; font-size: 20px; line-height: 1; padding: 2px 6px; border-radius: 4px; transition: color 0.2s; }
+  .remove-btn { background: none; border: none; color: var(--light); cursor: pointer; font-size: 19px; line-height: 1; padding: 2px 5px; border-radius: 4px; transition: color 0.2s; }
   .remove-btn:hover { color: var(--red); }
 
-  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 
-  .quick-prompts { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+  /* QUICK PROMPTS */
+  .quick-prompts { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
   .qp-btn { font-size: 12px; font-family: var(--sans); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--white); color: var(--ink2); cursor: pointer; transition: all 0.15s; }
   .qp-btn:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
 
-  textarea { width: 100%; background: var(--off); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; font-family: var(--sans); font-size: 15px; color: var(--ink); resize: none; outline: none; min-height: 100px; line-height: 1.6; transition: border-color 0.2s; font-weight: 300; }
+  /* TEXTAREA */
+  textarea { width: 100%; background: var(--off); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 13px 15px; font-family: var(--sans); font-size: 15px; color: var(--ink); resize: none; outline: none; min-height: 96px; line-height: 1.6; transition: border-color 0.2s; font-weight: 300; }
   textarea:focus { border-color: var(--ink); background: var(--white); }
   textarea::placeholder { color: var(--light); }
 
-  .output-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 20px; }
-  .out-chip { padding: 7px 16px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; background: var(--white); font-family: var(--sans); transition: all 0.15s; }
-  .out-chip:hover { border-color: var(--ink2); color: var(--ink); }
-  .out-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  /* CHIPS */
+  .chip-row { display: flex; gap: 7px; flex-wrap: wrap; margin: 10px 0 18px; }
+  .chip { padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; background: var(--white); font-family: var(--sans); transition: all 0.15s; display: flex; align-items: center; gap: 5px; }
+  .chip:hover { border-color: var(--ink2); color: var(--ink); }
+  .chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .free-tag { font-size: 10px; background: #d4edda; color: #1a6b3c; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+  .chip.active .free-tag { background: rgba(255,255,255,0.2); color: var(--white); }
 
-  .run-btn { width: 100%; padding: 13px; background: var(--ink); color: var(--white); border: none; border-radius: var(--radius); font-family: var(--serif); font-size: 17px; cursor: pointer; transition: opacity 0.2s; }
+  /* RUN BUTTON */
+  .run-btn { width: 100%; padding: 13px; background: var(--ink); color: var(--white); border: none; border-radius: var(--radius); font-family: var(--serif); font-size: 17px; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.1px; }
   .run-btn:hover { opacity: 0.85; }
-  .run-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .run-btn:disabled { opacity: 0.28; cursor: not-allowed; }
 
-  .error-banner { display: none; margin-top: 14px; padding: 12px 16px; border-radius: var(--radius); border: 1.5px solid #f5c6c6; background: #fff5f5; color: var(--red); font-size: 14px; }
+  /* ERROR */
+  .error-banner { display: none; margin-top: 12px; padding: 11px 15px; border-radius: var(--radius); border: 1.5px solid #f5c6c6; background: #fff5f5; color: var(--red); font-size: 13.5px; }
   .error-banner.show { display: block; }
 
-  .results-section { display: none; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); animation: fadeUp 0.3s ease; }
+  /* ═══════════════════════════════════════
+     RESULTS SECTION — fully redesigned
+  ═══════════════════════════════════════ */
+  .results-section { display: none; margin-top: 44px; animation: fadeUp 0.35s ease; }
   .results-section.show { display: block; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-  .results-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
-  .results-title { font-family: var(--serif); font-size: 22px; font-weight: 400; }
-  .results-meta { font-size: 12px; color: var(--muted); }
+  /* Top bar with file context */
+  .result-context {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; background: var(--off); border: 1px solid var(--border);
+    border-radius: 8px; margin-bottom: 20px; font-size: 12px; color: var(--muted);
+  }
+  .result-context-left { display: flex; align-items: center; gap: 8px; }
+  .result-context-file { font-weight: 500; color: var(--ink2); }
+  .result-context-sep { color: var(--border2); }
+  .result-model-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--ink); color: var(--white); font-weight: 500; }
 
-  .progress-bar { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 20px; }
-  .progress-fill { height: 100%; background: var(--ink); width: 0%; transition: width 0.4s ease; border-radius: 2px; }
+  /* Loading state */
+  .loading-state { display: none; }
+  .loading-state.show { display: block; }
+  .loading-steps { display: flex; flex-direction: column; gap: 10px; padding: 24px 0 8px; }
+  .loading-step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); opacity: 0; animation: stepIn 0.3s ease forwards; }
+  .loading-step.done { color: var(--ink2); }
+  .step-icon { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+  .loading-step.done .step-icon { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .loading-step.active .step-icon { border-color: var(--ink); animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes stepIn { to { opacity: 1; } }
+  .progress-thin { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 20px; }
+  .progress-thin-fill { height: 100%; background: var(--ink); width: 0%; transition: width 0.5s ease; }
 
-  .ai-text { font-size: 15px; line-height: 1.8; color: var(--ink2); white-space: pre-wrap; font-weight: 300; }
-  .ai-text.thinking { color: var(--muted); font-style: italic; }
+  /* Answer area */
+  .answer-area { display: none; }
+  .answer-area.show { display: block; }
 
-  #chartWrap { display: none; margin-top: 28px; padding: 24px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--off); }
-  #chartWrap.show { display: block; }
-  #chartCanvas { max-height: 300px; }
+  /* Insight cards — key numbers extracted */
+  .insight-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .insight-card { background: var(--off); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .insight-card-label { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.3px; margin-bottom: 4px; }
+  .insight-card-value { font-family: var(--serif); font-size: 22px; color: var(--ink); line-height: 1.2; }
+  .insight-card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .insight-card.positive .insight-card-value { color: var(--green); }
+  .insight-card.negative .insight-card-value { color: var(--red); }
 
-  .dl-section { display: none; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
-  .dl-section.show { display: block; }
-  .dl-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-  .dl-btn { display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; font-family: var(--sans); cursor: pointer; border: 1.5px solid var(--border); background: var(--white); color: var(--ink2); transition: all 0.15s; }
-  .dl-btn:hover { border-color: var(--ink); color: var(--ink); }
+  /* Main prose answer */
+  .answer-prose {
+    font-size: 15px; line-height: 1.82; color: var(--ink2);
+    font-weight: 300; margin-bottom: 24px;
+  }
+  .answer-prose p { margin-bottom: 12px; }
+  .answer-prose p:last-child { margin-bottom: 0; }
+  .answer-prose strong { font-weight: 600; color: var(--ink); }
 
-  .model-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 20px; }
-  .model-chip { padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; background: var(--white); font-family: var(--sans); transition: all 0.15s; display: flex; align-items: center; gap: 5px; }
-  .model-chip:hover { border-color: var(--ink2); color: var(--ink); }
-  .model-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
-  .free-tag { font-size: 10px; background: #d4edda; color: #2d6a4f; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
-  .model-chip.active .free-tag { background: rgba(255,255,255,0.2); color: var(--white); }
+  /* Highlight callout */
+  .answer-callout {
+    border-left: 3px solid var(--ink); padding: 12px 16px;
+    background: var(--off); border-radius: 0 8px 8px 0;
+    margin: 16px 0; font-size: 14px; color: var(--ink2); line-height: 1.6;
+  }
+  .answer-callout.positive { border-color: var(--green); background: var(--green-bg); }
+  .answer-callout.warning { border-color: #d97706; background: var(--amber-bg); color: var(--amber); }
+
+  /* Chart */
+  .chart-container { display: none; margin-bottom: 22px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--off); }
+  .chart-container.show { display: block; }
+  .chart-title { font-family: var(--serif); font-size: 16px; color: var(--ink); margin-bottom: 16px; font-weight: 400; }
+  #chartCanvas { max-height: 280px; }
+
+  /* Action row */
+  .action-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 18px; border-top: 1px solid var(--border); margin-top: 4px; }
+  .action-left { display: flex; gap: 8px; flex-wrap: wrap; }
+  .action-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; font-family: var(--sans); cursor: pointer; border: 1.5px solid var(--border); background: var(--white); color: var(--ink2); transition: all 0.15s; }
+  .action-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--off); }
+  .action-btn.primary { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .action-btn.primary:hover { opacity: 0.85; }
+  .result-time { font-size: 11px; color: var(--light); }
+
+  /* Follow-up */
+  .followup-row { display: flex; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .followup-input { flex: 1; background: var(--off); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: var(--sans); font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s; }
+  .followup-input:focus { border-color: var(--ink); background: var(--white); }
+  .followup-input::placeholder { color: var(--light); }
+  .followup-btn { padding: 10px 16px; background: var(--ink); color: var(--white); border: none; border-radius: 8px; font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; }
+  .followup-btn:hover { opacity: 0.82; }
 </style>
 </head>
 <body>
@@ -128,25 +202,24 @@
     <p>Upload a spreadsheet or document, ask anything — get summaries, charts, or exports instantly.</p>
   </div>
 
+  <!-- UPLOAD -->
   <span class="label">Upload File</span>
   <div class="type-pills">
     <span class="type-pill">Excel .xlsx</span>
     <span class="type-pill">CSV</span>
     <span class="type-pill">PDF</span>
   </div>
-
   <div class="upload-area" id="dropZone">
     <input type="file" id="fileInput" accept=".xlsx,.csv,.pdf"/>
     <svg class="upload-icon" viewBox="0 0 40 40" fill="none">
       <rect x="6" y="10" width="28" height="24" rx="3" stroke="currentColor" stroke-width="2"/>
       <path d="M20 18v8M20 18l-4 4M20 18l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M14 10V8a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="2"/>
+      <path d="M14 10V8a1 1 0 011-1h10a1 1 0 011 1v2" stroke="currentColor" stroke-width="2"/>
     </svg>
     <h3>Drop your file here</h3>
     <p>Excel, CSV, or PDF — up to 10MB</p>
     <label class="upload-browse" for="fileInput">Browse files</label>
   </div>
-
   <div class="file-pill" id="filePill">
     <span class="file-emoji" id="fileEmoji"></span>
     <div class="file-info">
@@ -158,79 +231,144 @@
 
   <hr class="divider"/>
 
+  <!-- PROMPT -->
   <span class="label">What do you want to know?</span>
   <div class="quick-prompts" id="quickPrompts"></div>
   <textarea id="promptInput" placeholder="e.g. Summarize Q1 performance and flag anyone who missed their sales target…" rows="4"></textarea>
 
+  <!-- OUTPUT FORMAT -->
   <span class="label" style="margin-top:18px">Output format</span>
-  <div class="output-row">
-    <button class="out-chip active" data-out="summary">💬 Summary</button>
-    <button class="out-chip" data-out="chart">📊 Chart</button>
-    <button class="out-chip" data-out="excel">📗 Excel</button>
-    <button class="out-chip" data-out="word">📘 Report</button>
+  <div class="chip-row" id="outputRow">
+    <button class="chip active" data-out="summary">💬 Summary</button>
+    <button class="chip" data-out="chart">📊 Chart</button>
+    <button class="chip" data-out="excel">📗 Excel</button>
+    <button class="chip" data-out="word">📘 Report</button>
   </div>
 
-  <span class="label" style="margin-top:4px">AI Model</span>
-  <div class="model-row">
-    <button class="model-chip active" data-model="gemini-flash">⚡ Gemini Flash <span class="free-tag">Free</span></button>
-    <button class="model-chip" data-model="gemini-pro">🧠 Gemini Pro</button>
-    <button class="model-chip" data-model="gpt-4o-mini">✦ GPT-4o Mini</button>
-    <button class="model-chip" data-model="gpt-4o">✦ GPT-4o</button>
-    <button class="model-chip" data-model="claude-haiku">◆ Claude Haiku</button>
-    <button class="model-chip" data-model="claude-sonnet">◆ Claude Sonnet</button>
+  <!-- AI MODEL -->
+  <span class="label">AI Model</span>
+  <div class="chip-row" id="modelRow">
+    <button class="chip active" data-model="gemini-flash">⚡ Gemini Flash <span class="free-tag">Free</span></button>
+    <button class="chip" data-model="gemini-pro">🧠 Gemini Pro</button>
+    <button class="chip" data-model="gpt-4o-mini">✦ GPT-4o Mini</button>
+    <button class="chip" data-model="gpt-4o">✦ GPT-4o</button>
+    <button class="chip" data-model="claude-haiku">◆ Haiku</button>
+    <button class="chip" data-model="claude-sonnet">◆ Sonnet</button>
   </div>
 
   <button class="run-btn" id="runBtn" disabled>Analyze</button>
   <div class="error-banner" id="errorBanner"></div>
 
+  <!-- ═══ RESULTS ═══ -->
   <div class="results-section" id="resultsSection">
-    <div class="results-header">
-      <span class="results-title">Results</span>
-      <span class="results-meta" id="resultsMeta"></span>
+
+    <!-- Context bar -->
+    <div class="result-context" id="resultContext" style="display:none">
+      <div class="result-context-left">
+        <span id="ctxEmoji"></span>
+        <span class="result-context-file" id="ctxFile"></span>
+        <span class="result-context-sep">·</span>
+        <span id="ctxPromptShort"></span>
+      </div>
+      <span class="result-model-badge" id="ctxModel"></span>
     </div>
-    <div class="progress-bar" id="progressBar" style="display:none">
-      <div class="progress-fill" id="progressFill"></div>
+
+    <!-- Loading state -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-steps" id="loadingSteps">
+        <div class="loading-step" id="step1" style="animation-delay:0s">
+          <div class="step-icon">1</div>
+          <span>Reading file contents</span>
+        </div>
+        <div class="loading-step" id="step2" style="animation-delay:0.4s">
+          <div class="step-icon">2</div>
+          <span>Sending to AI</span>
+        </div>
+        <div class="loading-step" id="step3" style="animation-delay:0.8s">
+          <div class="step-icon">3</div>
+          <span>Generating insights</span>
+        </div>
+      </div>
+      <div class="progress-thin"><div class="progress-thin-fill" id="progressFill"></div></div>
     </div>
-    <div class="ai-text thinking" id="aiText">Analyzing your file…</div>
-    <div id="chartWrap"><canvas id="chartCanvas"></canvas></div>
-    <div class="dl-section" id="dlSection">
-      <span class="label">Download results</span>
-      <div class="dl-row" id="dlRow"></div>
+
+    <!-- Answer area -->
+    <div class="answer-area" id="answerArea">
+
+      <!-- Insight cards (filled dynamically) -->
+      <div class="insight-cards" id="insightCards"></div>
+
+      <!-- Chart -->
+      <div class="chart-container" id="chartContainer">
+        <div class="chart-title" id="chartTitle"></div>
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <!-- Prose answer -->
+      <div class="answer-prose" id="answerProse"></div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <div class="action-left" id="actionLeft">
+          <button class="action-btn primary" id="dlExcel">📗 Excel</button>
+          <button class="action-btn" id="dlReport">📘 Report</button>
+          <button class="action-btn" id="copyBtn">⎘ Copy</button>
+        </div>
+        <span class="result-time" id="resultTime"></span>
+      </div>
+
+      <!-- Follow-up -->
+      <div class="followup-row">
+        <input class="followup-input" id="followupInput" placeholder="Ask a follow-up question about this file…"/>
+        <button class="followup-btn" id="followupBtn">Ask →</button>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-let uploadedFile = null, fileContent = '', fileType = '', selectedOutput = 'summary', selectedModel = 'gemini-flash', chartInstance = null;
+let uploadedFile = null, fileContent = '', fileType = '';
+let selectedOutput = 'summary', selectedModel = 'gemini-flash';
+let chartInstance = null, lastRawText = '', conversationHistory = [];
+
+const MODEL_LABELS = {
+  'gemini-flash': 'Gemini Flash', 'gemini-pro': 'Gemini Pro',
+  'gpt-4o-mini': 'GPT-4o Mini', 'gpt-4o': 'GPT-4o',
+  'claude-haiku': 'Claude Haiku', 'claude-sonnet': 'Claude Sonnet',
+};
 
 const PROMPTS = {
   default: ["Summarize the key insights","Identify the top trends","Flag any anomalies","Write an executive summary"],
-  csv:     ["Summarize this dataset","Show top 10 rows by value","Flag missing data","Chart the key metric"],
-  xlsx:    ["Summarize and highlight KPIs","Who hit their target?","Identify budget gaps","Monthly trend breakdown"],
-  pdf:     ["Summarize in 5 bullet points","Extract key dates and names","List action items","Write a business memo"],
+  csv:  ["Summarize this dataset","Show top 10 rows by value","Flag missing data","Chart the key metric"],
+  xlsx: ["Summarize and highlight KPIs","Who hit their target?","Identify budget gaps","Monthly trend breakdown"],
+  pdf:  ["Summarize in 5 bullet points","Extract key dates and names","List action items","Write a business memo"],
 };
 
+// ── PROMPTS ────────────────────────────────────────────────────────────────
 function renderPrompts(ext) {
   const el = document.getElementById('quickPrompts');
-  el.innerHTML = (PROMPTS[ext] || PROMPTS.default).map(p => `<button class="qp-btn">${p}</button>`).join('');
+  el.innerHTML = (PROMPTS[ext] || PROMPTS.default).map(p =>
+    `<button class="qp-btn">${p}</button>`).join('');
   el.querySelectorAll('.qp-btn').forEach(b => b.addEventListener('click', () => {
     document.getElementById('promptInput').value = b.textContent; updateRun();
   }));
 }
 renderPrompts('default');
 
-document.querySelector('.output-row').addEventListener('click', e => {
-  const chip = e.target.closest('.out-chip'); if (!chip) return;
-  document.querySelectorAll('.out-chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active'); selectedOutput = chip.dataset.out;
+// ── CHIP SELECTORS ─────────────────────────────────────────────────────────
+document.getElementById('outputRow').addEventListener('click', e => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  document.querySelectorAll('#outputRow .chip').forEach(x => x.classList.remove('active'));
+  c.classList.add('active'); selectedOutput = c.dataset.out;
+});
+document.getElementById('modelRow').addEventListener('click', e => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  document.querySelectorAll('#modelRow .chip').forEach(x => x.classList.remove('active'));
+  c.classList.add('active'); selectedModel = c.dataset.model;
 });
 
-document.querySelector('.model-row').addEventListener('click', e => {
-  const chip = e.target.closest('.model-chip'); if (!chip) return;
-  document.querySelectorAll('.model-chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active'); selectedModel = chip.dataset.model;
-});
-
+// ── UPLOAD ─────────────────────────────────────────────────────────────────
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -243,36 +381,35 @@ function handleFile(file) {
   const ext = file.name.split('.').pop().toLowerCase();
   if (!['xlsx','csv','pdf'].includes(ext)) { alert('Please upload an Excel, CSV, or PDF file.'); return; }
   uploadedFile = file; fileType = ext;
-  document.getElementById('fileEmoji').textContent = {xlsx:'📗',csv:'📋',pdf:'📄'}[ext];
+  const icons = {xlsx:'📗', csv:'📋', pdf:'📄'};
+  document.getElementById('fileEmoji').textContent = icons[ext];
   document.getElementById('fileName').textContent = file.name;
   document.getElementById('fileSize').textContent = `${(file.size/1024).toFixed(1)} KB · ${ext.toUpperCase()}`;
   document.getElementById('filePill').classList.add('show');
   dropZone.style.display = 'none';
+  conversationHistory = [];
   renderPrompts(ext); updateRun();
 
   const reader = new FileReader();
-  if (ext === 'csv') {
-    reader.onload = e => { fileContent = e.target.result.slice(0, 8000); };
-    reader.readAsText(file);
-  } else if (ext === 'xlsx') {
+  if (ext === 'csv') { reader.onload = e => { fileContent = e.target.result.slice(0,8000); }; reader.readAsText(file); }
+  else if (ext === 'xlsx') {
     reader.onload = e => {
       try {
         const wb = XLSX.read(e.target.result, {type:'binary'}); let txt = '';
         wb.SheetNames.forEach(n => { txt += `[Sheet: ${n}]\n${XLSX.utils.sheet_to_csv(wb.Sheets[n]).slice(0,3000)}\n\n`; });
-        fileContent = txt.slice(0, 8000);
+        fileContent = txt.slice(0,8000);
       } catch { fileContent = '[Could not parse Excel]'; }
     };
     reader.readAsBinaryString(file);
-  } else {
-    // PDF text extraction happens server-side via pdf-parse
-    fileContent = '';
-  }
+  } else { fileContent = `[PDF: ${file.name}]`; }
 }
 
 function clearFile() {
   uploadedFile = null; fileContent = ''; fileType = ''; fileInput.value = '';
   document.getElementById('filePill').classList.remove('show');
-  dropZone.style.display = ''; renderPrompts('default'); updateRun();
+  dropZone.style.display = '';
+  conversationHistory = [];
+  renderPrompts('default'); updateRun();
 }
 
 function updateRun() {
@@ -280,155 +417,266 @@ function updateRun() {
 }
 document.getElementById('promptInput').addEventListener('input', updateRun);
 
-function showError(msg) {
-  const el = document.getElementById('errorBanner');
-  el.textContent = msg; el.classList.add('show');
-}
+// ── ERROR ──────────────────────────────────────────────────────────────────
+function showError(msg) { const e = document.getElementById('errorBanner'); e.textContent = msg; e.classList.add('show'); }
 function hideError() { document.getElementById('errorBanner').classList.remove('show'); }
 
-document.getElementById('runBtn').addEventListener('click', async () => {
-  const prompt = document.getElementById('promptInput').value.trim();
+// ── LOADING STEPS ──────────────────────────────────────────────────────────
+let stepTimers = [];
+function startLoadingSteps() {
+  ['step1','step2','step3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('done','active');
+    el.style.opacity = '0';
+  });
+  const pf = document.getElementById('progressFill'); pf.style.width = '0%';
+
+  let w = 0;
+  const ticker = setInterval(() => { w = Math.min(w + Math.random()*8, 88); pf.style.width = w+'%'; }, 350);
+  stepTimers.push(ticker);
+
+  const s1 = document.getElementById('step1');
+  s1.style.opacity = '1'; s1.classList.add('active');
+
+  const t1 = setTimeout(() => { s1.classList.remove('active'); s1.classList.add('done'); s1.querySelector('.step-icon').textContent = '✓';
+    const s2 = document.getElementById('step2'); s2.style.opacity = '1'; s2.classList.add('active'); }, 900);
+  const t2 = setTimeout(() => { document.getElementById('step2').classList.remove('active'); document.getElementById('step2').classList.add('done'); document.getElementById('step2').querySelector('.step-icon').textContent = '✓';
+    const s3 = document.getElementById('step3'); s3.style.opacity = '1'; s3.classList.add('active'); }, 1800);
+  stepTimers.push(t1, t2);
+  return ticker;
+}
+
+function endLoadingSteps(ticker) {
+  clearInterval(ticker);
+  stepTimers.forEach(t => clearTimeout(t)); stepTimers = [];
+  ['step2','step3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.opacity = '1'; el.classList.remove('active'); el.classList.add('done');
+    el.querySelector('.step-icon').textContent = '✓';
+  });
+  const pf = document.getElementById('progressFill'); pf.style.width = '100%';
+  setTimeout(() => { document.getElementById('loadingState').classList.remove('show'); }, 400);
+}
+
+// ── ANALYZE ────────────────────────────────────────────────────────────────
+document.getElementById('runBtn').addEventListener('click', () => runAnalysis(document.getElementById('promptInput').value.trim(), false));
+
+async function runAnalysis(prompt, isFollowup) {
   if (!uploadedFile || !prompt) return;
-
   hideError();
-  const runBtn = document.getElementById('runBtn');
-  runBtn.disabled = true; runBtn.textContent = 'Analyzing…';
 
+  const runBtn = document.getElementById('runBtn');
+  if (!isFollowup) { runBtn.disabled = true; runBtn.textContent = 'Analyzing…'; }
+
+  // Show results section
   const section = document.getElementById('resultsSection');
   section.classList.add('show');
-  setTimeout(() => section.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+  setTimeout(() => section.scrollIntoView({behavior:'smooth', block:'start'}), 80);
 
-  const aiText = document.getElementById('aiText');
-  aiText.className = 'ai-text thinking'; aiText.textContent = 'Reading your file…';
-  document.getElementById('chartWrap').classList.remove('show');
-  document.getElementById('dlSection').classList.remove('show');
+  // Reset answer area
+  document.getElementById('answerArea').classList.remove('show');
+  document.getElementById('insightCards').innerHTML = '';
+  document.getElementById('answerProse').innerHTML = '';
+  document.getElementById('chartContainer').classList.remove('show');
+  document.getElementById('resultContext').style.display = 'none';
 
-  const pb = document.getElementById('progressBar'), pf = document.getElementById('progressFill');
-  pb.style.display = 'block'; pf.style.width = '0%';
-  let w = 0;
-  const ticker = setInterval(() => { w = Math.min(w + Math.random()*10, 85); pf.style.width = w+'%'; }, 300);
+  // Show loading
+  document.getElementById('loadingState').classList.add('show');
+  const ticker = startLoadingSteps();
+
+  // Build output instructions
+  const outputInstructions = {
+    summary: `Respond in this exact JSON structure:
+{"insights":[{"label":"...", "value":"...", "sub":"...", "type":"neutral|positive|negative"}],"prose":"Your plain prose analysis here in 2-4 paragraphs. Use \\n\\n to separate paragraphs.","callout":{"text":"One key takeaway or recommendation","type":"positive|warning|neutral"}}
+Keep insights to 2-4 key numbers. Prose should be clear and direct.`,
+    chart: `Respond in this exact JSON structure:
+{"insights":[{"label":"...", "value":"...", "sub":"...", "type":"neutral|positive|negative"}],"prose":"Brief 1-2 paragraph analysis.","chart":{"type":"bar|line|pie","title":"...","labels":[...],"datasets":[{"label":"...","data":[...]}]},"callout":{"text":"Key insight from the chart","type":"positive|warning|neutral"}}`,
+    excel: `Respond in this exact JSON structure:
+{"insights":[{"label":"...", "value":"...", "sub":"...", "type":"neutral|positive|negative"}],"prose":"Clear analysis in 2-3 paragraphs with \\n\\n between them.","callout":{"text":"Main recommendation","type":"positive|warning|neutral"}}`,
+    word: `Respond in this exact JSON structure:
+{"insights":[{"label":"...", "value":"...", "sub":"...", "type":"neutral|positive|negative"}],"prose":"Executive Summary\\n\\nKey Findings\\n\\nRecommendations — write each section as a paragraph.","callout":{"text":"Most important action item","type":"positive|warning|neutral"}}`,
+  }[selectedOutput] || '';
+
+  const systemPrompt = `You are WorkBreeze, a sharp business analyst AI. Analyze the file and respond ONLY with valid JSON as specified. No markdown, no extra text outside the JSON. Be specific with real numbers and names from the data.`;
+
+  // Build conversation
+  const msgHistory = [...conversationHistory];
+  if (msgHistory.length === 0) {
+    msgHistory.push({ role:'user', content:`File: ${uploadedFile.name}\n\nContent:\n${fileContent || '[unavailable]'}\n\nRequest: ${prompt}\n\n${outputInstructions}` });
+  } else {
+    msgHistory.push({ role:'user', content: prompt });
+  }
 
   try {
-    // For PDFs, send file as base64 for server-side extraction
-    let payload = { fileContent, fileName: uploadedFile.name, fileType, prompt, outputType: selectedOutput, model: selectedModel };
-
-    if (fileType === 'pdf') {
-      const b64 = await toBase64(uploadedFile);
-      payload.fileBase64 = b64;
-    }
-
     const res = await fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ fileContent, fileName: uploadedFile.name, fileType, prompt, outputType: selectedOutput, model: selectedModel }),
     });
 
-    clearInterval(ticker); pf.style.width = '100%';
-    setTimeout(() => { pb.style.display = 'none'; pf.style.width = '0%'; }, 500);
+    endLoadingSteps(ticker);
 
     const data = await res.json();
 
     if (!res.ok) {
-      section.classList.remove('show');
-      showError(data.error || 'Something went wrong. Please try again.');
+      document.getElementById('loadingState').classList.remove('show');
+      showError(data.error || 'Something went wrong.');
       runBtn.disabled = false; runBtn.textContent = 'Analyze'; updateRun();
       return;
     }
 
-    const text = data.result || 'No response received.';
-    aiText.className = 'ai-text';
-    await streamText(aiText, text);
-    document.getElementById('resultsMeta').textContent = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    lastRawText = data.result || '';
+    conversationHistory = msgHistory;
+    conversationHistory.push({ role:'assistant', content: lastRawText });
 
-    if (selectedOutput === 'chart') {
-      const m = text.match(/```json\s*([\s\S]*?)```/);
-      if (m) { try { renderChart(JSON.parse(m[1])); } catch {} }
-    }
-
-    buildDownloads(text);
+    renderResults(lastRawText, prompt);
 
   } catch (err) {
-    clearInterval(ticker); pb.style.display = 'none';
-    section.classList.remove('show');
+    endLoadingSteps(ticker);
+    document.getElementById('loadingState').classList.remove('show');
     showError('Connection error. Make sure you are connected to the internet and try again.');
   }
 
   runBtn.disabled = false; runBtn.textContent = 'Analyze'; updateRun();
-});
-
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result.split(',')[1]);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
 }
 
-async function streamText(el, text) {
-  el.textContent = '';
-  for (let i = 0; i < text.length; i++) {
-    el.textContent += text[i];
-    if (i % 4 === 0) await new Promise(r => setTimeout(r, 6));
+// ── RENDER RESULTS ─────────────────────────────────────────────────────────
+function renderResults(raw, prompt) {
+  // Parse JSON from AI
+  let parsed = null;
+  try {
+    const clean = raw.replace(/```json|```/g,'').trim();
+    parsed = JSON.parse(clean);
+  } catch {
+    // Fallback: treat as plain text
+    parsed = { prose: raw, insights: [], callout: null };
   }
+
+  // Context bar
+  const ctx = document.getElementById('resultContext');
+  ctx.style.display = 'flex';
+  document.getElementById('ctxEmoji').textContent = {xlsx:'📗',csv:'📋',pdf:'📄'}[fileType] || '📄';
+  document.getElementById('ctxFile').textContent = uploadedFile.name;
+  document.getElementById('ctxPromptShort').textContent = prompt.length > 40 ? prompt.slice(0,40)+'…' : prompt;
+  document.getElementById('ctxModel').textContent = MODEL_LABELS[selectedModel] || selectedModel;
+
+  // Insight cards
+  const cardsEl = document.getElementById('insightCards');
+  cardsEl.innerHTML = '';
+  if (parsed.insights && parsed.insights.length > 0) {
+    parsed.insights.forEach(ins => {
+      const card = document.createElement('div');
+      card.className = `insight-card ${ins.type || 'neutral'}`;
+      card.innerHTML = `<div class="insight-card-label">${ins.label}</div><div class="insight-card-value">${ins.value}</div>${ins.sub ? `<div class="insight-card-sub">${ins.sub}</div>` : ''}`;
+      cardsEl.appendChild(card);
+    });
+  }
+
+  // Chart
+  if (parsed.chart) {
+    renderChart(parsed.chart);
+  }
+
+  // Prose
+  const proseEl = document.getElementById('answerProse');
+  if (parsed.prose) {
+    const paragraphs = parsed.prose.split(/\n\n+/).filter(p => p.trim());
+    proseEl.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+    // Animate in
+    proseEl.style.opacity = '0';
+    setTimeout(() => { proseEl.style.transition = 'opacity 0.4s ease'; proseEl.style.opacity = '1'; }, 50);
+  }
+
+  // Callout
+  const existingCallout = document.getElementById('answerCallout');
+  if (existingCallout) existingCallout.remove();
+  if (parsed.callout) {
+    const callout = document.createElement('div');
+    callout.id = 'answerCallout';
+    callout.className = `answer-callout ${parsed.callout.type || 'neutral'}`;
+    callout.textContent = parsed.callout.text;
+    proseEl.after(callout);
+  }
+
+  // Time
+  document.getElementById('resultTime').textContent = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+  // Show answer
+  document.getElementById('answerArea').classList.add('show');
 }
 
+// ── CHART ──────────────────────────────────────────────────────────────────
 function renderChart(cfg) {
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-  document.getElementById('chartWrap').classList.add('show');
+  const container = document.getElementById('chartContainer');
+  container.classList.add('show');
+  document.getElementById('chartTitle').textContent = cfg.title || '';
   chartInstance = new Chart(document.getElementById('chartCanvas').getContext('2d'), {
-    type: cfg.chartType || 'bar',
+    type: cfg.type || 'bar',
     data: {
       labels: cfg.labels,
       datasets: cfg.datasets.map((ds, i) => ({
         ...ds,
-        backgroundColor: cfg.chartType === 'pie'
-          ? ['#1a1a18','#5a5a55','#9a9a94','#c4c4be','#e4e4de']
-          : i === 0 ? 'rgba(26,26,24,0.82)' : 'rgba(90,90,85,0.6)',
+        backgroundColor: cfg.type === 'pie'
+          ? ['#1a1a18','#5a5a55','#9a9a94','#c4c4be','#e4e4de','#eaeae6']
+          : i === 0 ? 'rgba(26,26,24,0.80)' : 'rgba(90,90,85,0.55)',
         borderColor: i === 0 ? '#1a1a18' : '#5a5a55',
         borderWidth: 1.5,
-        borderRadius: cfg.chartType === 'bar' ? 4 : 0,
+        borderRadius: cfg.type === 'bar' ? 5 : 0,
+        tension: 0.35,
+        pointBackgroundColor: '#1a1a18',
       })),
     },
     options: {
       responsive: true,
       plugins: {
-        legend: { labels: { color: '#3d3d3a', font: { family: 'Geist', size: 12 }, boxWidth: 14 } },
-        title: { display: !!cfg.title, text: cfg.title, color: '#1a1a18', font: { size: 15, weight: '500' }, padding: {bottom:14} },
+        legend: { labels: { color: '#3d3d3a', font: { family: 'Geist', size: 12 }, boxWidth: 12, padding: 16 } },
+        title: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a18', titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.75)',
+          padding: 10, cornerRadius: 7, titleFont: { family: 'Geist', size: 13, weight: '500' },
+        },
       },
-      scales: cfg.chartType !== 'pie' ? {
-        x: { ticks: { color: '#8a8a85', font: { size: 12 } }, grid: { color: '#e4e4e0' } },
-        y: { ticks: { color: '#8a8a85', font: { size: 12 } }, grid: { color: '#e4e4e0' } },
+      scales: cfg.type !== 'pie' ? {
+        x: { ticks: { color: '#8a8a85', font: { size: 12, family: 'Geist' } }, grid: { color: '#ebebeb' } },
+        y: { ticks: { color: '#8a8a85', font: { size: 12, family: 'Geist' } }, grid: { color: '#ebebeb' } },
       } : {},
     },
   });
 }
 
-function buildDownloads(text) {
-  const row = document.getElementById('dlRow');
-  row.innerHTML = '';
-  document.getElementById('dlSection').classList.add('show');
+// ── DOWNLOADS ──────────────────────────────────────────────────────────────
+document.getElementById('dlExcel').addEventListener('click', () => {
+  const wb = XLSX.utils.book_new();
+  const rows = [['WorkBreeze Analysis'],['File:', uploadedFile?.name],['Prompt:', document.getElementById('promptInput').value],['']];
+  lastRawText.split('\n').forEach(l => { if (l.trim()) rows.push([l.trim()]); });
+  const ws = XLSX.utils.aoa_to_sheet(rows); ws['!cols'] = [{wch:60}];
+  XLSX.utils.book_append_sheet(wb, ws, 'Analysis');
+  XLSX.writeFile(wb, 'workbreeze-analysis.xlsx');
+});
 
-  const excelBtn = document.createElement('button');
-  excelBtn.className = 'dl-btn'; excelBtn.innerHTML = '📗 Download Excel';
-  excelBtn.addEventListener('click', () => {
-    const wb = XLSX.utils.book_new();
-    const rows = [['WorkBreeze Analysis'],['File:', uploadedFile?.name],['Prompt:', document.getElementById('promptInput').value],['']];
-    text.split('\n').forEach(l => { if (l.trim()) rows.push([l.trim()]); });
-    const ws = XLSX.utils.aoa_to_sheet(rows); ws['!cols'] = [{wch:60}];
-    XLSX.utils.book_append_sheet(wb, ws, 'Analysis');
-    XLSX.writeFile(wb, 'workbreeze-analysis.xlsx');
+document.getElementById('dlReport').addEventListener('click', () => {
+  const blob = new Blob([`WORKBREEZE REPORT\n${'─'.repeat(36)}\nFile: ${uploadedFile?.name}\nDate: ${new Date().toLocaleDateString()}\nPrompt: ${document.getElementById('promptInput').value}\n\n${lastRawText}\n\n─\nGenerated by WorkBreeze`], {type:'text/plain'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'workbreeze-report.txt'; a.click();
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(lastRawText).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied'; setTimeout(() => { btn.textContent = '⎘ Copy'; }, 2000);
   });
+});
 
-  const reportBtn = document.createElement('button');
-  reportBtn.className = 'dl-btn'; reportBtn.innerHTML = '📘 Download Report';
-  reportBtn.addEventListener('click', () => {
-    const blob = new Blob([`WORKBREEZE REPORT\n${'─'.repeat(36)}\nFile: ${uploadedFile?.name}\nDate: ${new Date().toLocaleDateString()}\nPrompt: ${document.getElementById('promptInput').value}\n\n${text}\n\n─\nGenerated by WorkBreeze`], {type:'text/plain'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'workbreeze-report.txt'; a.click();
-  });
-
-  row.appendChild(excelBtn); row.appendChild(reportBtn);
-}
+// ── FOLLOW-UP ──────────────────────────────────────────────────────────────
+document.getElementById('followupBtn').addEventListener('click', () => {
+  const val = document.getElementById('followupInput').value.trim();
+  if (!val) return;
+  document.getElementById('followupInput').value = '';
+  runAnalysis(val, true);
+});
+document.getElementById('followupInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('followupBtn').click(); }
+});
 </script>
 </body>
 </html>
