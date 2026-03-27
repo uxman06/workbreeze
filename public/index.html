@@ -106,6 +106,13 @@
   .dl-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
   .dl-btn { display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; font-family: var(--sans); cursor: pointer; border: 1.5px solid var(--border); background: var(--white); color: var(--ink2); transition: all 0.15s; }
   .dl-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+  .model-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 20px; }
+  .model-chip { padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; background: var(--white); font-family: var(--sans); transition: all 0.15s; display: flex; align-items: center; gap: 5px; }
+  .model-chip:hover { border-color: var(--ink2); color: var(--ink); }
+  .model-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .free-tag { font-size: 10px; background: #d4edda; color: #2d6a4f; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+  .model-chip.active .free-tag { background: rgba(255,255,255,0.2); color: var(--white); }
 </style>
 </head>
 <body>
@@ -163,6 +170,16 @@
     <button class="out-chip" data-out="word">📘 Report</button>
   </div>
 
+  <span class="label" style="margin-top:4px">AI Model</span>
+  <div class="model-row">
+    <button class="model-chip active" data-model="gemini-flash">⚡ Gemini Flash <span class="free-tag">Free</span></button>
+    <button class="model-chip" data-model="gemini-pro">🧠 Gemini Pro</button>
+    <button class="model-chip" data-model="gpt-4o-mini">✦ GPT-4o Mini</button>
+    <button class="model-chip" data-model="gpt-4o">✦ GPT-4o</button>
+    <button class="model-chip" data-model="claude-haiku">◆ Claude Haiku</button>
+    <button class="model-chip" data-model="claude-sonnet">◆ Claude Sonnet</button>
+  </div>
+
   <button class="run-btn" id="runBtn" disabled>Analyze</button>
   <div class="error-banner" id="errorBanner"></div>
 
@@ -184,7 +201,7 @@
 </div>
 
 <script>
-let uploadedFile = null, fileContent = '', fileType = '', selectedOutput = 'summary', chartInstance = null;
+let uploadedFile = null, fileContent = '', fileType = '', selectedOutput = 'summary', selectedModel = 'gemini-flash', chartInstance = null;
 
 const PROMPTS = {
   default: ["Summarize the key insights","Identify the top trends","Flag any anomalies","Write an executive summary"],
@@ -206,6 +223,12 @@ document.querySelector('.output-row').addEventListener('click', e => {
   const chip = e.target.closest('.out-chip'); if (!chip) return;
   document.querySelectorAll('.out-chip').forEach(c => c.classList.remove('active'));
   chip.classList.add('active'); selectedOutput = chip.dataset.out;
+});
+
+document.querySelector('.model-row').addEventListener('click', e => {
+  const chip = e.target.closest('.model-chip'); if (!chip) return;
+  document.querySelectorAll('.model-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active'); selectedModel = chip.dataset.model;
 });
 
 const dropZone = document.getElementById('dropZone');
@@ -287,7 +310,7 @@ document.getElementById('runBtn').addEventListener('click', async () => {
 
   try {
     // For PDFs, send file as base64 for server-side extraction
-    let payload = { fileContent, fileName: uploadedFile.name, fileType, prompt, outputType: selectedOutput };
+    let payload = { fileContent, fileName: uploadedFile.name, fileType, prompt, outputType: selectedOutput, model: selectedModel };
 
     if (fileType === 'pdf') {
       const b64 = await toBase64(uploadedFile);
