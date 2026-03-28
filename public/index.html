@@ -248,12 +248,9 @@
   <!-- AI MODEL -->
   <span class="label">AI Model</span>
   <div class="chip-row" id="modelRow">
-    <button class="chip active" data-model="gemini-flash">⚡ Gemini Flash <span class="free-tag">Free</span></button>
-    <button class="chip" data-model="gemini-pro">🧠 Gemini Pro</button>
-    <button class="chip" data-model="gpt-4o-mini">✦ GPT-4o Mini</button>
+    <button class="chip active" data-model="gpt-4o-mini">✦ GPT-4o Mini <span class="free-tag">Fast</span></button>
     <button class="chip" data-model="gpt-4o">✦ GPT-4o</button>
-    <button class="chip" data-model="claude-haiku">◆ Haiku</button>
-    <button class="chip" data-model="claude-sonnet">◆ Sonnet</button>
+    <button class="chip" data-model="claude-sonnet">◆ Claude Sonnet <span class="free-tag">Most Efficient</span></button>
   </div>
 
   <button class="run-btn" id="runBtn" disabled>Analyze</button>
@@ -310,9 +307,9 @@
       <!-- Actions -->
       <div class="action-row">
         <div class="action-left" id="actionLeft">
-          <button class="action-btn primary" id="dlExcel">📗 Excel</button>
-          <button class="action-btn" id="dlReport">📘 Report</button>
-          <button class="action-btn" id="copyBtn">⎘ Copy</button>
+          <button class="action-btn primary" id="dlExcel">📗 Download Excel</button>
+          <button class="action-btn" id="dlReport">📘 Download Report</button>
+          <button class="action-btn" id="copyBtn">⎘ Copy Text</button>
         </div>
         <span class="result-time" id="resultTime"></span>
       </div>
@@ -329,13 +326,11 @@
 
 <script>
 let uploadedFile = null, fileContent = '', fileType = '';
-let selectedOutput = 'summary', selectedModel = 'gemini-flash';
+let selectedOutput = 'summary', selectedModel = 'gpt-4o-mini';
 let chartInstance = null, lastRawText = '', conversationHistory = [];
 
 const MODEL_LABELS = {
-  'gemini-flash': 'Gemini Flash', 'gemini-pro': 'Gemini Pro',
-  'gpt-4o-mini': 'GPT-4o Mini', 'gpt-4o': 'GPT-4o',
-  'claude-haiku': 'Claude Haiku', 'claude-sonnet': 'Claude Sonnet',
+  'gpt-4o-mini': 'GPT-4o Mini', 'gpt-4o': 'GPT-4o', 'claude-sonnet': 'Claude Sonnet',
 };
 
 const PROMPTS = {
